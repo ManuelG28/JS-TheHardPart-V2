@@ -6,7 +6,6 @@ function createFunction() {
     return printHello;
 }
 
-// /*** Uncomment these to check your work! ***/
 const function1 = createFunction();
 function1(); // => should console.log('hello');
 
@@ -19,7 +18,6 @@ function createFunctionPrinter(input) {
     return printInput;
 }
 
-// /*** Uncomment these to check your work! ***/
 const printSample = createFunctionPrinter('sample');
 printSample(); // => should console.log('sample');
 const printHello = createFunctionPrinter('hello');
@@ -39,10 +37,6 @@ function outer() {
 const willCounter = outer();
 const jasCounter = outer();
 
-// Uncomment each of these lines one by one.
-// Before your do, guess what will be logged from each function call.
-
-// /*** Uncomment these to check your work! ***/
 willCounter(); //This line of code will print 1
 willCounter(); //This line of code will print 2
 willCounter(); //This line of code will print 3
@@ -59,7 +53,6 @@ function addByX(x) {
     return adding
 }
 
-// /*** Uncomment these to check your work! ***/
 const addByTwo = addByX(2);
 addByTwo(1); // => should return 3
 addByTwo(2); // => should return 4
@@ -91,9 +84,7 @@ function once(func) {
     return onceAgain;
 }
 
-
-// /*** Uncomment these to check your work! ***/
-let addByTwo = input => input+2;
+let addByTwo = input => input + 2;
 const onceFunc = once(addByTwo);
 console.log(onceFunc(4));  // => should log 6
 console.log(onceFunc(10));  // => should log 6
@@ -111,9 +102,59 @@ function after(count, func) {
     }
     return countToExecute;
 }
-// /*** Uncomment these to check your work! ***/
-const called = function() { console.log('hello') };
+
+const called = function () { console.log('hello') };
 const afterCalled = after(3, called);
 afterCalled(); // => nothing is printed
 afterCalled(); // => nothing is printed
 afterCalled(); // => 'hello' is printed
+
+//CHALLENGE 6
+function delay(func, wait) {
+    setTimeout(func, wait);
+}
+
+const sayHello = () => console.log('Hello!');
+delay(sayHello, 3000);
+
+// CHALLENGE 7
+function rollCall(names) {
+    let iterator = 0;
+    function printName() {
+        if (iterator >= names.length) {
+            console.log('Everyone accounted for.');
+        }
+        else {
+            console.log(names[iterator]);
+        }
+        iterator++;
+    }
+    return printName;
+}
+
+const rollCaller = rollCall(['Victoria', 'Juan', 'Ruth'])
+rollCaller() // => should log 'Victoria'
+rollCaller() // => should log 'Juan'
+rollCaller() // => should log 'Ruth'
+rollCaller() // => should log 'Everyone accounted for'
+
+// CHALLENGE 8
+function saveOutput(func, magicWord) {
+    let answer = new Object();
+    function checkInput(input) {
+        if (input === magicWord) {
+            return answer;
+        }
+        else {
+            answer[input] = func(input);
+            return func(input);
+        }
+    }
+    return checkInput;
+}
+
+const multiplyBy2 = function (num) { return num * 2; };
+const multBy2AndLog = saveOutput(multiplyBy2, 'boo');
+console.log(multBy2AndLog(2)); // => should log 4
+console.log(multBy2AndLog(9)); // => should log 18
+console.log(multBy2AndLog('boo')); // => should log { 2: 4, 9: 18 }
