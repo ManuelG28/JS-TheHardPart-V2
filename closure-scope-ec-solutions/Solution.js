@@ -158,3 +158,92 @@ const multBy2AndLog = saveOutput(multiplyBy2, 'boo');
 console.log(multBy2AndLog(2)); // => should log 4
 console.log(multBy2AndLog(9)); // => should log 18
 console.log(multBy2AndLog('boo')); // => should log { 2: 4, 9: 18 }
+
+// CHALLENGE 9
+function cycleIterator(array) {
+    let iterator = 0;
+    function checkIndex() {
+        if (iterator === array.length) {
+            iterator = 0;
+            let lastItem = array[iterator];
+            return lastItem;
+        }
+        else {
+            let item = array[iterator];
+            iterator++;
+            return item;
+        }
+    }
+    return checkIndex;
+}
+
+const threeDayWeekend = ['Fri', 'Sat', 'Sun'];
+const getDay = cycleIterator(threeDayWeekend);
+console.log(getDay()); // => should log 'Fri'
+console.log(getDay()); // => should log 'Sat'
+console.log(getDay()); // => should log 'Sun'
+console.log(getDay()); // => should log 'Fri'
+
+// CHALLENGE 10
+function defineFirstArg(func, arg) {
+    function doOperation(input) {
+        return func(arg, input);
+    }
+    return doOperation;
+}
+
+const subtract = function (big, small) { return big - small; };
+const subFrom20 = defineFirstArg(subtract, 20);
+console.log(subFrom20(5)); // => should log 15
+
+// CHALLENGE 11
+function dateStamp(func) {
+    let result = new Object();
+    function showResultWithDate(input) {
+        let now = new Date();
+        result['date'] = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()}`;
+        result['output'] = func(input);
+        return result;
+    }
+    return showResultWithDate;
+}
+
+const stampedMultBy2 = dateStamp(n => n * 2);
+console.log(stampedMultBy2(4)); // => should log { date: (today's date), output: 8 }
+console.log(stampedMultBy2(6)); // => should log { date: (today's date), output: 12 }
+
+// CHALLENGE 14
+function callTimes() {
+    let countCalls = 0;
+    function showCount() {
+        countCalls++
+        console.log(countCalls);
+    }
+    return showCount;
+}
+
+let myNewFunc1 = callTimes();
+let myNewFunc2 = callTimes();
+myNewFunc1(); // => 1
+myNewFunc1(); // => 2
+myNewFunc2(); // => 1
+myNewFunc2(); // => 2
+
+// CHALLENGE 15
+function russianRoulette(num) {
+    let attempts = 1;
+    function play() {
+        if (attempts < num) {
+            attempts++;
+            return 'click';
+        }
+        else if (attempts === num) {
+            attempts++;
+            return 'bang';
+        }
+        else if (attempts > num) {
+            return 'reload to play again';
+        }
+    }
+    return play;
+}
